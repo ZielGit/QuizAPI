@@ -18,123 +18,194 @@ namespace QuizAPI.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
             modelBuilder.Entity("QuizAPI.Domain.Models.Cuestionario", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+            {
+                b.Property<int>("Id")
+                    .ValueGeneratedOnAdd()
+                    .HasColumnType("int");
 
-                    b.Property<int>("Activo")
-                        .HasColumnType("int");
+                b.Property<int>("Activo")
+                    .HasColumnType("int");
 
-                    b.Property<string>("Descripcion")
-                        .IsRequired()
-                        .HasColumnType("varchar(150)");
+                b.Property<string>("Descripcion")
+                    .IsRequired()
+                    .HasColumnType("varchar(150)");
 
-                    b.Property<DateTime>("FechaCreacion")
-                        .HasColumnType("datetime(6)");
+                b.Property<DateTime>("FechaCreacion")
+                    .HasColumnType("datetime(6)");
 
-                    b.Property<string>("Nombre")
-                        .IsRequired()
-                        .HasColumnType("varchar(100)");
+                b.Property<string>("Nombre")
+                    .IsRequired()
+                    .HasColumnType("varchar(100)");
 
-                    b.Property<int>("UsuarioId")
-                        .HasColumnType("int");
+                b.Property<int>("UsuarioId")
+                    .HasColumnType("int");
 
-                    b.HasKey("Id");
+                b.HasKey("Id");
 
-                    b.HasIndex("UsuarioId");
+                b.HasIndex("UsuarioId");
 
-                    b.ToTable("Cuestionario");
-                });
+                b.ToTable("Cuestionario");
+            });
 
             modelBuilder.Entity("QuizAPI.Domain.Models.Pregunta", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+            {
+                b.Property<int>("Id")
+                    .ValueGeneratedOnAdd()
+                    .HasColumnType("int");
 
-                    b.Property<int>("CuestionarioId")
-                        .HasColumnType("int");
+                b.Property<int>("CuestionarioId")
+                    .HasColumnType("int");
 
-                    b.Property<string>("Descripcion")
-                        .IsRequired()
-                        .HasColumnType("varchar(100)");
+                b.Property<string>("Descripcion")
+                    .IsRequired()
+                    .HasColumnType("varchar(100)");
 
-                    b.HasKey("Id");
+                b.HasKey("Id");
 
-                    b.HasIndex("CuestionarioId");
+                b.HasIndex("CuestionarioId");
 
-                    b.ToTable("Pregunta");
-                });
+                b.ToTable("Pregunta");
+            });
 
             modelBuilder.Entity("QuizAPI.Domain.Models.Respuesta", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+            {
+                b.Property<int>("Id")
+                    .ValueGeneratedOnAdd()
+                    .HasColumnType("int");
 
-                    b.Property<string>("Descripcion")
-                        .IsRequired()
-                        .HasColumnType("varchar(50)");
+                b.Property<string>("Descripcion")
+                    .IsRequired()
+                    .HasColumnType("varchar(50)");
 
-                    b.Property<bool>("EsCorrecta")
-                        .HasColumnType("tinyint(1)");
+                b.Property<bool>("EsCorrecta")
+                    .HasColumnType("tinyint(1)");
 
-                    b.Property<int>("PreguntaId")
-                        .HasColumnType("int");
+                b.Property<int>("PreguntaId")
+                    .HasColumnType("int");
 
-                    b.HasKey("Id");
+                b.HasKey("Id");
 
-                    b.HasIndex("PreguntaId");
+                b.HasIndex("PreguntaId");
 
-                    b.ToTable("Respuesta");
-                });
+                b.ToTable("Respuesta");
+            });
+
+            modelBuilder.Entity("QuizAPI.Domain.Models.RespuestaCuestionario", b =>
+            {
+                b.Property<int>("Id")
+                    .ValueGeneratedOnAdd()
+                    .HasColumnType("int");
+
+                b.Property<int>("Activo")
+                    .HasColumnType("int");
+
+                b.Property<int>("CuestionarioId")
+                    .HasColumnType("int");
+
+                b.Property<DateTime>("Fecha")
+                    .HasColumnType("datetime(6)");
+
+                b.Property<string>("NombreParticipante")
+                    .IsRequired()
+                    .HasColumnType("varchar(100)");
+
+                b.HasKey("Id");
+
+                b.HasIndex("CuestionarioId");
+
+                b.ToTable("RespuestaCuestionario");
+            });
+
+            modelBuilder.Entity("QuizAPI.Domain.Models.RespuestaCuestionarioDetalle", b =>
+            {
+                b.Property<int>("Id")
+                    .ValueGeneratedOnAdd()
+                    .HasColumnType("int");
+
+                b.Property<int>("RespuestaCuestionarioId")
+                    .HasColumnType("int");
+
+                b.Property<int>("RespuestaId")
+                    .HasColumnType("int");
+
+                b.HasKey("Id");
+
+                b.HasIndex("RespuestaCuestionarioId");
+
+                b.HasIndex("RespuestaId");
+
+                b.ToTable("RespuestaCuestionarioDetalles");
+            });
 
             modelBuilder.Entity("QuizAPI.Domain.Models.Usuario", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+            {
+                b.Property<int>("Id")
+                    .ValueGeneratedOnAdd()
+                    .HasColumnType("int");
 
-                    b.Property<string>("NombreUsuario")
-                        .IsRequired()
-                        .HasColumnType("varchar(20)");
+                b.Property<string>("NombreUsuario")
+                    .IsRequired()
+                    .HasColumnType("varchar(20)");
 
-                    b.Property<string>("Password")
-                        .IsRequired()
-                        .HasColumnType("varchar(50)");
+                b.Property<string>("Password")
+                    .IsRequired()
+                    .HasColumnType("varchar(50)");
 
-                    b.HasKey("Id");
+                b.HasKey("Id");
 
-                    b.ToTable("Usuario");
-                });
+                b.ToTable("Usuario");
+            });
 
             modelBuilder.Entity("QuizAPI.Domain.Models.Cuestionario", b =>
-                {
-                    b.HasOne("QuizAPI.Domain.Models.Usuario", "Usuario")
-                        .WithMany()
-                        .HasForeignKey("UsuarioId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
+            {
+                b.HasOne("QuizAPI.Domain.Models.Usuario", "Usuario")
+                    .WithMany()
+                    .HasForeignKey("UsuarioId")
+                    .OnDelete(DeleteBehavior.Cascade)
+                    .IsRequired();
+            });
 
             modelBuilder.Entity("QuizAPI.Domain.Models.Pregunta", b =>
-                {
-                    b.HasOne("QuizAPI.Domain.Models.Cuestionario", "Cuestionario")
-                        .WithMany("Pregunta")
-                        .HasForeignKey("CuestionarioId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
+            {
+                b.HasOne("QuizAPI.Domain.Models.Cuestionario", "Cuestionario")
+                    .WithMany("listPreguntas")
+                    .HasForeignKey("CuestionarioId")
+                    .OnDelete(DeleteBehavior.Cascade)
+                    .IsRequired();
+            });
 
             modelBuilder.Entity("QuizAPI.Domain.Models.Respuesta", b =>
-                {
-                    b.HasOne("QuizAPI.Domain.Models.Pregunta", "Pregunta")
-                        .WithMany("Respuesta")
-                        .HasForeignKey("PreguntaId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
+            {
+                b.HasOne("QuizAPI.Domain.Models.Pregunta", "Pregunta")
+                    .WithMany("listRespuestas")
+                    .HasForeignKey("PreguntaId")
+                    .OnDelete(DeleteBehavior.Cascade)
+                    .IsRequired();
+            });
+
+            modelBuilder.Entity("QuizAPI.Domain.Models.RespuestaCuestionario", b =>
+            {
+                b.HasOne("QuizAPI.Domain.Models.Cuestionario", "Cuestionario")
+                    .WithMany()
+                    .HasForeignKey("CuestionarioId")
+                    .OnDelete(DeleteBehavior.Cascade)
+                    .IsRequired();
+            });
+
+            modelBuilder.Entity("QuizAPI.Domain.Models.RespuestaCuestionarioDetalle", b =>
+            {
+                b.HasOne("QuizAPI.Domain.Models.RespuestaCuestionario", "RespuestaCuestionario")
+                    .WithMany("ListRtaCuestionarioDetalle")
+                    .HasForeignKey("RespuestaCuestionarioId")
+                    .OnDelete(DeleteBehavior.Cascade)
+                    .IsRequired();
+
+                b.HasOne("QuizAPI.Domain.Models.Respuesta", "Respuesta")
+                    .WithMany()
+                    .HasForeignKey("RespuestaId")
+                    .OnDelete(DeleteBehavior.Cascade)
+                    .IsRequired();
+            });
 #pragma warning restore 612, 618
         }
     }

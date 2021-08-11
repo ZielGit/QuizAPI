@@ -1,7 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
-using QuizAPI.Domain.IRepositories;
+﻿using QuizAPI.Domain.IRepositories;
 using QuizAPI.Domain.Models;
 using QuizAPI.Persistence.Context;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;

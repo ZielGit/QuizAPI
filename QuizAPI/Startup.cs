@@ -40,11 +40,13 @@ namespace QuizAPI
             services.AddScoped<IUsuarioService, UsuarioService>();
             services.AddScoped<ILoginService, LoginService>();
             services.AddScoped<ICuestionarioService, CuestionarioService>();
+            services.AddScoped<IRespuestaCuestionarioService, RespuestaCuestionarioService>();
 
             // Repository
             services.AddScoped<IUsuarioRepository, UsuarioRepository>();
             services.AddScoped<ILoginRepository, LoginRepository>();
             services.AddScoped<ICuestionarioRepository, CuestionarioRepository>();
+            services.AddScoped<IRespuestaCuestionarioRepository, RespuestaCuestionarioRepository>();
 
             // Cors
             services.AddCors(options => options.AddPolicy("AllowWebapp",
@@ -66,7 +68,9 @@ namespace QuizAPI
                             ClockSkew = TimeSpan.Zero
                         });
 
-            services.AddControllers();
+            services.AddControllers().AddNewtonsoftJson(options =>
+                                options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+                            ); ;
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
